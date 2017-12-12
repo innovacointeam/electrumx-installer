@@ -11,11 +11,19 @@ function assert_pyrocksdb {
 	fi
 }
 
+function install_neoscrypt_module {
+    _DIR=$(pwd)
+    cd ~/.electrumx-installer/neoscrypt
+    python3 setup.py install
+    cd _DIR
+}
+
 function install_electrumx {
 	_DIR=$(pwd)
         python3 -m pip install multidict || true
 	rm -rf "/tmp/electrumx/"
-	git clone https://github.com/kyuupichan/electrumx /tmp/electrumx
+	install_neoscrypt_module
+	git clone https://github.com/innovacointeam/electrumx /tmp/electrumx
 	cd /tmp/electrumx
 	if [ $USE_ROCKSDB == 1 ]; then
 		# We don't necessarily want to install plyvel
